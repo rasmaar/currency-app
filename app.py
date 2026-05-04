@@ -1,4 +1,8 @@
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ==========================================
 # DATA NAMA NEGARA DAN KODE MATA UANG
@@ -173,7 +177,10 @@ print("=" * 50)
 # AMBIL DATA API
 # ==========================================
 try:
-    response = requests.get("https://open.er-api.com/v6/latest/USD")
+    API_URL = os.getenv("API_URL")
+    BASE = os.getenv("BASE_CURRENCY")
+
+    response = requests.get(f"{API_URL}/{BASE}")
     data = response.json()
 except:
     print("Tidak dapat terhubung ke API.")
@@ -207,8 +214,8 @@ except:
 # ==========================================
 try:
     response = requests.get(
-        f"https://open.er-api.com/v6/latest/{from_currency}"
-    )
+    f"{API_URL}/{from_currency}"
+)
     data = response.json()
 except:
     print("Gagal mengambil data API.")
